@@ -2,13 +2,43 @@
   <li class="row flex-nowrap py10">
     <div>
       <div class="ml10 bg-cl-secondary">
-        <img class="image" v-lazy="thumbnail" alt="" >
+        <router-link
+          class="block no-underline product-link"
+          :to="localizedRoute({
+            name: product.type_id + '-product',
+            params: {
+              parentSku: product.parentSku ? product.parentSku : product.sku,
+              slug: product.slug,
+              childSku: product.sku
+            }
+          })"
+
+          data-testid="productLink"
+        >
+          <img class="image" v-lazy="thumbnail" :alt="product.name" @click="$emit('linkclick')">
+        </router-link>
+
       </div>
     </div>
     <div class="col-xs flex pl35 py15 start-xs between-sm details">
       <div>
         <div class="serif h4 name">
-          {{ product.name | htmlDecode }}
+          <router-link
+            class="block no-underline product-link"
+            :to="localizedRoute({
+              name: product.type_id + '-product',
+              params: {
+                parentSku: product.parentSku ? product.parentSku : product.sku,
+                slug: product.slug,
+                childSku: product.sku
+              }
+            })"
+            data-testid="productLink"
+          >
+            <span @click="$emit('linkclick')">
+              {{ product.name | htmlDecode }}
+            </span>
+          </router-link>
         </div>
         <div class="h6 cl-bg-tertiary pt5 sku" data-testid="productSku">
           {{ product.sku }}
